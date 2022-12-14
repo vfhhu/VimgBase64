@@ -1,9 +1,7 @@
 
-<h1>
-VimgBase64
-</h1>
+<h1>VimgBase64</h1>
 Use JS conver image to Base64 from input file or img tag 
-<br>
+
 [sample](https://tool.vfhhu.xyz/a_js_sample/vbase64.php)
 <h2>
 Step1 include js

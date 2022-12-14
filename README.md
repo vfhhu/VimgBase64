@@ -30,3 +30,18 @@ vimg.readImage({image_id},function (retA){
 
 })
 ``````
+
+<h1>
+Other setting
+</h1>
+
+``````js
+//setting export image width
+vimg.setExportWidth(1024);
+
+//setting export image type only image/jpeg and image/png
+vimg.setImageType("image/jpeg");
+
+//setting export image type only image/jpeg and image/png
+vimg.setDelay(300);
+``````

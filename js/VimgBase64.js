@@ -34,6 +34,10 @@ class VimgBase64{
         let _self = this;
         _self.limite=parseInt(lim);
     }
+    setDelay(ms){
+        let _self = this;
+        _self.delay=parseInt(ms);
+    }
     constructor(option={},) {
         let _self = this;
         _self.progname = "VimgBase64";
@@ -43,12 +47,14 @@ class VimgBase64{
         _self.limite=-1;
         _self.option=option;
         _self.tmpMap= {};
+        _self.delay=300;
 
         let width=1280;
         if("width" in _self.option)width=Number(_self.option["width"]);
         _self.setExportWidth(width);
         if("limite" in _self.option)_self.setLimite(_self.option["limite"]);
         if("imagetype" in _self.option )_self.setImageType(_self.option["imagetype"]);
+        if("delay" in _self.option)_self.setDelay(_self.option["delay"]);
     }
     setInput(input_id="",callback){
         if(input_id==null || typeof input_id!="string" ){
@@ -100,7 +106,7 @@ class VimgBase64{
                         });
                     }else tmpImageElement.src = _self.can.toDataURL();
                     // _self.readURL_file();
-                }, 300);
+                }, _self.delay);
             });
         }
     }
@@ -132,9 +138,9 @@ class VimgBase64{
                                 "index":_self.upload_index});
                         }
                         _self.readURL_file(callback);
-                    },300);
+                    },_self.delay);
                 });
-            },300);
+            },_self.delay);
         }
         if(_self.upload_index>=_self.upload_input.files.length || (_self.limite>0 && _self.upload_index>=_self.limite)){
             if(_self.callback!=null && typeof(_self.callback)=="function"){

@@ -1,18 +1,22 @@
+
+<h1>
+VimgBase64
+</h1>
 Use JS conver image to Base64 from input file or img tag 
 <br>
 [sample](https://tool.vfhhu.xyz/a_js_sample/vbase64.php)
-<h1>
+<h2>
 Step1 include js
-</h1>
+</h2>
 
 ``````js
 <script src="js/VimgBase64.js"></script>
 ``````
 
 
-<h1>
+<h2>
 Step2 init VimgBase64
-</h1>
+</h2>
 
 ``````js
 var vimg=new VimgBase64();
@@ -20,9 +24,9 @@ var vimg=new VimgBase64();
 //var vimg=new VimgBase64({"width":1280,"imagetype":"image/jpeg","delay":300});
 ``````
 
-<h1>
+<h2>
 Step3 set input file or load img tag and callback
-</h1>
+</h2>
 
 ``````js
 //set onchange to input file
@@ -41,9 +45,9 @@ vimg.readImage({image_id},function (retA){
 })
 ``````
 
-<h1>
+<h2>
 Other setting
-</h1>
+</h2>
 
 ``````js
 //setting export image width

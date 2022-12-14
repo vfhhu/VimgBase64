@@ -38,7 +38,6 @@ vimg.readImage({image_id},function (retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){
         console.log(retA);
     }
-
 })
 ``````
 

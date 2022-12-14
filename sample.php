@@ -1,5 +1,16 @@
 <?php
-
+function urlsafe_decode($base64S){
+    $base64S = str_replace(array('-','_'),array('+','/'),$base64S);
+    $mod4 = strlen($base64S) % 4;
+    if ($mod4) {
+        $base64S .= substr('====', $mod4);
+    }
+    return $base64S;
+}
+function urlsafe_encode($base64S) {
+    $base64S = str_replace(array('+','/','='),array('-','_',''),$base64S);
+    return $base64S;
+}
 ?>
 <!DOCTYPE html>
 <html >

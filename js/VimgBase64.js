@@ -3,6 +3,11 @@ var VimgBase64OnStop="onStop";
 var VimgBase64OnStart="onStart";
 var VimgBase64IdCnt=0;
 /*
+* Github:
+* https://github.com/vfhhu/VimgBase64
+* example:
+* https://tool.vfhhu.xyz/a_js_sample/vbase64.php
+*
 * option has:
 * 1 width
 * 2 limite

@@ -38,7 +38,7 @@ class VimgBase64{
         let _self = this;
         _self.delay=parseInt(ms);
     }
-    constructor(option={},) {
+    constructor(option={}) {
         let _self = this;
         _self.progname = "VimgBase64";
         _self.workdiv_id=_self._CreatWorkDiv(_self.progname);

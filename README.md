@@ -42,6 +42,6 @@ vimg.setExportWidth(1024);
 //setting export image type only image/jpeg and image/png
 vimg.setImageType("image/jpeg");
 
-//setting export image type only image/jpeg and image/png
+//setting delay for draw image
 vimg.setDelay(300);
 ``````

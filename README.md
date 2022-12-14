@@ -1,4 +1,4 @@
-Conver image to Base64 from input file or img tag
+Use JS conver image to Base64 from input file or img tag 
 <br>
 [sample](https://tool.vfhhu.xyz/a_js_sample/vbase64.php)
 <h1>

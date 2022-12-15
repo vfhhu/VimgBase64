@@ -288,7 +288,6 @@ class VimgBase64{
         s.style.cssText="display:none";
         if(append==null || typeof append!="string" || append=="" || append=="body") document.body.appendChild(s);
         else document.getElementById(append).appendChild(s);
-
         return workdiv_id;
     }
     _CreatImage(head="",append="body"){

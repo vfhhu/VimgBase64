@@ -57,10 +57,21 @@ vimg.setImageType("image/jpeg");
 //setting delay for draw image
 vimg.setDelay(300);
 ``````
+<h2>
+Remark
+</h2>
+When you want to upload base64 data
+<br>
+Please use the image_encode or data_encode of the returned data
+<br>
+it use urlsafe_encode base64
+
 
 
 <h1>中文說明</h1>
 JS前端將 input 及 img tag 的圖片轉成base64格式
+<br>
+轉換完成的資料可直接用於顯示或上傳
 
 [範例網址](https://tool.vfhhu.xyz/a_js_sample/vbase64.php)
 <h2>
@@ -115,3 +126,12 @@ vimg.setImageType("image/jpeg");
 //設定轉換的延遲時間,圖片轉換失敗時可加大延遲時間試試
 vimg.setDelay(300);
 ``````
+
+<h2>
+備註
+</h2>
+當你想上傳base64數據時
+<br>
+請使用返回數據的 image_encode 或 data_encode
+<br>
+它使用 urlsafe_encode base64

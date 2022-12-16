@@ -36,7 +36,6 @@ vimg.setInput({input_file_id},function(retA){
 
 //direct load img tag
 vimg.readImage({image_id},function (retA){
-    console.log(retA)
     if("type" in retA && retA["type"]==VimgBase64OnData){
         console.log(retA);
     }
@@ -104,8 +103,7 @@ vimg.setInput({input_file_id},function(retA){
 });
 
 //直接讀取img標籤的圖片內容
-vimg.readImage({image_id},function (retA){
-    console.log(retA)
+vimg.readImage({image_id},function (retA){    
     if("type" in retA && retA["type"]==VimgBase64OnData){
         console.log(retA);
     }

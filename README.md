@@ -65,8 +65,8 @@ Please use the image_encode or data_encode of the returned data
 <br>
 it use urlsafe_encode base64
 
-
-
+<br><br><br>
+######################################
 <h1>中文說明</h1>
 JS前端將 input 及 img tag 的圖片轉成base64格式
 <br>

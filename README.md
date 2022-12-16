@@ -76,6 +76,7 @@ JS前端將 input 及 img tag 的圖片轉成base64格式
 <h2>
 第一步: 引入js
 </h2>
+
 ``````js
 <script src="js/VimgBase64.js"></script>
 ``````

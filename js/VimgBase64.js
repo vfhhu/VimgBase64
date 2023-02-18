@@ -40,8 +40,8 @@ class VimgBase64{
     }
     constructor(option={}) {
         let _self = this;
-        _self.progname = "VimgBase64";
-        _self.workdiv_id=_self._CreatWorkDiv(_self.progname);
+        // _self.progname = "VimgBase64";
+        _self.workdiv_id=_self._CreatWorkDiv(_self.constructor.name);
         _self.acceptImage = ["image/jpeg","image/png"];
         _self.imagetype="image/jpeg"
         _self.limite=-1;
@@ -88,7 +88,7 @@ class VimgBase64{
             if(callback!=null && typeof callback=="function"){
                 callback({"type":VimgBase64OnStart,"data":""});
             }
-            let canvasid=_self._CreatCanvas(_self.progname,_self.workdiv_id);
+            let canvasid=_self._CreatCanvas(_self.constructor.name,_self.workdiv_id);
             _self.slider_move_image(img ,canvasid,_self.Orientation ,function(ret) {
                 setTimeout(function () {
                     if (callback != null && typeof callback == "function") {
@@ -121,7 +121,7 @@ class VimgBase64{
             imageElement.crossOrigin="*"
             imageElement.src=reader.result;
 
-            let canvasid=_self._CreatCanvas(_self.progname,_self.workdiv_id);
+            let canvasid=_self._CreatCanvas(_self.constructor.name,_self.workdiv_id);
             setTimeout(function(){
                 _self.slider_move_image(imageElement ,canvasid ,_self.Orientation ,function(ret){
                     setTimeout(function(){

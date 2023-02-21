@@ -30,9 +30,9 @@ class VimgBase64{
         }
         return false;
     }
-    setLimite(lim){
+    setLimit(lim){
         let _self = this;
-        _self.limite=parseInt(lim);
+        _self.limit=parseInt(lim);
     }
     setDelay(ms){
         let _self = this;
@@ -44,7 +44,7 @@ class VimgBase64{
         _self.workdiv_id=_self._CreatWorkDiv(_self.constructor.name);
         _self.acceptImage = ["image/jpeg","image/png"];
         _self.imagetype="image/jpeg"
-        _self.limite=-1;
+        _self.limit=-1;
         _self.option=option;
         _self.tmpMap= {};
         _self.delay=300;
@@ -52,7 +52,8 @@ class VimgBase64{
         let width=1280;
         if("width" in _self.option)width=Number(_self.option["width"]);
         _self.setExportWidth(width);
-        if("limite" in _self.option)_self.setLimite(_self.option["limite"]);
+        if("limite" in _self.option)_self.setLimit(_self.option["limite"]);
+        if("limit" in _self.option)_self.setLimit(_self.option["limit"]);
         if("imagetype" in _self.option )_self.setImageType(_self.option["imagetype"]);
         if("delay" in _self.option)_self.setDelay(_self.option["delay"]);
     }
@@ -145,7 +146,7 @@ class VimgBase64{
                 });
             },_self.delay);
         }
-        if(_self.upload_index>=_self.upload_input.files.length || (_self.limite>0 && _self.upload_index>=_self.limite)){
+        if(_self.upload_index>=_self.upload_input.files.length || (_self.limit>0 && _self.upload_index>=_self.limit)){
             if(_self.callback!=null && typeof(_self.callback)=="function"){
                 _self.callback({"type":VimgBase64OnStop});
             }

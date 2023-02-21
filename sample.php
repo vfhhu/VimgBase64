@@ -69,7 +69,7 @@ function urlsafe_encode($base64S) {
         <script>
             var vimg
             $(function() {
-                vimg=new VimgBase64({"width":1280,"limite":6});
+                vimg=new VimgBase64({"width":1280,"limit":6});
                 vimg.setInput("tx_cm_image",function(retA){
                     if("type" in retA && retA["type"]==VimgBase64OnData){
                         console.log(retA)

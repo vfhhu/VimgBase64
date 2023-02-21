@@ -104,7 +104,10 @@ class VimgBase64{
                             "data_head": data_head,
                             "index": _self.upload_index
                         });
-                    }else tmpImageElement.src = _self.can.toDataURL();
+                    }else {
+                        let can=_self.tmpMap[canvasid]["can"];
+                        tmpImageElement.src = can.toDataURL();
+                    }
                     // _self.readURL_file();
                 }, _self.delay);
             });

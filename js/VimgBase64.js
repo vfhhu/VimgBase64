@@ -22,6 +22,11 @@ class VimgBase64{
         _self.def_width=w;
         if(_self.def_width<10)_self.def_width=10;
     }
+    setExportHeigh(w=100){
+        let _self = this;
+        _self.def_heigh=w;
+        if(_self.def_heigh<10)_self.def_heigh=10;
+    }
     setImageType(type){
         let _self = this;
         if(_self.acceptImage.indexOf(type)>=0){
@@ -52,6 +57,12 @@ class VimgBase64{
         let width=1280;
         if("width" in _self.option)width=Number(_self.option["width"]);
         _self.setExportWidth(width);
+
+        let heigh=width*4;
+        if("height" in _self.option)heigh=Number(_self.option["height"]);
+        if("heigh" in _self.option)heigh=Number(_self.option["heigh"]);
+        _self.setExportHeigh(heigh);
+
         if("limite" in _self.option)_self.setLimit(_self.option["limite"]);
         if("limit" in _self.option)_self.setLimit(_self.option["limit"]);
         if("imagetype" in _self.option )_self.setImageType(_self.option["imagetype"]);
@@ -161,11 +172,24 @@ class VimgBase64{
             })
         }
     }
+    getMinWidth(nw,nh){
+        let _self = this;
+        let rate_r=_self.def_width/nw;
+        let sWidth = parseInt(rate_r * nw);
+        let sHeight = parseInt(rate_r * nh);
+        if(sHeight>_self.def_heigh){
+            rate_r=_self.def_heigh/nh;
+            sWidth = parseInt(rate_r * nw);
+            sHeight = parseInt(rate_r * nh);
+        }
+        return sWidth;
+    }
     slider_move_image(el,canvasid, Orientation,callback){
         let _self = this;
         let nw = el.naturalWidth;
         let nh = el.naturalHeight;
-        let rate_r=_self.def_width/nw;
+        let widthO=_self.getMinWidth(nw,nh);
+        let rate_r=widthO/nw;
         let sWidth = parseInt(rate_r * nw);
         let sHeight = parseInt(rate_r * nh);
         let top = 0;
@@ -191,8 +215,8 @@ class VimgBase64{
 
 
             let rotation = 90;
-            let sWidth = _self.def_width;
-            let sHeight = parseInt(_self.def_width*nh/nw);
+            let sWidth = widthO;
+            let sHeight = parseInt(widthO*nh/nw);
             can.width=sWidth;
             can.height=sHeight;
 
@@ -214,8 +238,8 @@ class VimgBase64{
             ret+="sWidth:"+sWidth+",sHeight"+sHeight+",start_x:"+start_x +"<br>";
         }else if(Orientation==7 || Orientation==8){//-90
             let rotation = -90;
-            let sWidth = _self.def_width;
-            let sHeight = parseInt(_self.def_width*nh/nw);
+            let sWidth = widthO;
+            let sHeight = parseInt(widthO*nh/nw);
             can.width=sWidth;
             can.height=sHeight;
 

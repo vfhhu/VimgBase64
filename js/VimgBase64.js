@@ -43,6 +43,11 @@ class VimgBase64{
         let _self = this;
         _self.delay=parseInt(ms);
     }
+
+    setExifOrientation(bl){
+        let _self = this;
+        _self.is_exif_orientation=(bl===true);
+    }
     constructor(option={}) {
         let _self = this;
         // _self.progname = "VimgBase64";
@@ -50,9 +55,12 @@ class VimgBase64{
         _self.acceptImage = ["image/jpeg","image/png"];
         _self.imagetype="image/jpeg"
         _self.limit=-1;
+        _self.is_exif_orientation=false;
         _self.option=option;
         _self.tmpMap= {};
         _self.delay=300;
+
+        if("is_exif_orientation" in _self.option)_self.setExifOrientation(_self.option["is_exif_orientation"]);
 
         let width=1280;
         if("width" in _self.option)width=Number(_self.option["width"]);
@@ -205,13 +213,13 @@ class VimgBase64{
         if(Orientation==2 || Orientation==4 || Orientation==5 || Orientation==7 ){//鏡像
 
         }
-        if(Orientation==3 || Orientation==4){//+180
+        if(_self.is_exif_orientation && (Orientation==3 || Orientation==4)){//+180
             can.width=sWidth;
             can.height=sHeight;
 
             ctx.rotate(180*radian);
             ctx.drawImage(el, left, top, nw, nh, 0, 0, can.width, can.height);
-        }else if(Orientation==5 || Orientation==6){//+90
+        }else if(_self.is_exif_orientation && (Orientation==5 || Orientation==6)){//+90
 
 
             let rotation = 90;
@@ -236,7 +244,7 @@ class VimgBase64{
             ctx.drawImage(canvas4, start_x, 0,  w-start_x, w, 0, 0, can.width, can.height);
 
             ret+="sWidth:"+sWidth+",sHeight"+sHeight+",start_x:"+start_x +"<br>";
-        }else if(Orientation==7 || Orientation==8){//-90
+        }else if(_self.is_exif_orientation && (Orientation==7 || Orientation==8)){//-90
             let rotation = -90;
             let sWidth = widthO;
             let sHeight = parseInt(widthO*nh/nw);

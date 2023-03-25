@@ -48,6 +48,17 @@ class VimgBase64{
         let _self = this;
         _self.is_exif_orientation=(bl===true);
     }
+    get_compression_ratio(){
+        let _self = this;
+        return _self.compression_ratio;
+    }
+    set_compression_ratio(r){
+        let _self = this;
+        let rr=Number(r);
+        if(rr>0 && rr<1){
+            _self.compression_ratio=rr;
+        }
+    }
     constructor(option={}) {
         let _self = this;
         // _self.progname = "VimgBase64";
@@ -70,6 +81,9 @@ class VimgBase64{
         if("height" in _self.option)heigh=Number(_self.option["height"]);
         if("heigh" in _self.option)heigh=Number(_self.option["heigh"]);
         _self.setExportHeigh(heigh);
+
+        _self.compression_ratio=0.9;
+        if("compression_ratio" in _self.option)_self.compression_ratio=Number(_self.option["compression_ratio"]);
 
         if("limite" in _self.option)_self.setLimit(_self.option["limite"]);
         if("limit" in _self.option)_self.setLimit(_self.option["limit"]);
@@ -113,7 +127,7 @@ class VimgBase64{
                 setTimeout(function () {
                     if (callback != null && typeof callback == "function") {
                         let can=_self.tmpMap[canvasid]["can"];
-                        let data = can.toDataURL(_self.imagetype);
+                        let data = can.toDataURL(_self.imagetype,_self.compression_ratio);
                         let data_head = "data:" + _self.imagetype + ";base64,";
                         callback({
                             "type": VimgBase64OnData,
@@ -150,7 +164,7 @@ class VimgBase64{
                     setTimeout(function(){
                         if(callback!=null && typeof callback=="function"){
                             let can=_self.tmpMap[canvasid]["can"];
-                            let data=can.toDataURL(_self.imagetype);
+                            let data=can.toDataURL(_self.imagetype,_self.compression_ratio);
                             let data_head="data:"+_self.imagetype+";base64,";
                             callback({"type":VimgBase64OnData,
                                 "data":data,

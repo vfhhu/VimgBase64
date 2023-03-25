@@ -222,68 +222,73 @@ class VimgBase64{
         can.height=sHeight;
         let ret="";
         ret+="image:"+nw+"x"+nh+"<br>";
+
+        can.width=sWidth;
+        can.height=sHeight;
+        ctx.drawImage(el, left, top, nw, nh, 0, 0, can.width, can.height);
+
         //if(console.log)console.log("image source nw nh ",nw,nh);
-        let radian = Math.PI / 180;
-        if(Orientation==2 || Orientation==4 || Orientation==5 || Orientation==7 ){//鏡像
-
-        }
-        if(_self.is_exif_orientation && (Orientation==3 || Orientation==4)){//+180
-            can.width=sWidth;
-            can.height=sHeight;
-
-            ctx.rotate(180*radian);
-            ctx.drawImage(el, left, top, nw, nh, 0, 0, can.width, can.height);
-        }else if(_self.is_exif_orientation && (Orientation==5 || Orientation==6)){//+90
-
-
-            let rotation = 90;
-            let sWidth = widthO;
-            let sHeight = parseInt(widthO*nh/nw);
-            can.width=sWidth;
-            can.height=sHeight;
-
-            let w =  Math.max(sWidth,sHeight);
-            let real_w = w * nw / nh;
-            let start_x = parseInt((w -real_w));
-            let canvas4 = document.createElement('canvas');
-            canvas4.width = w;
-            canvas4.height = w;
-            let ctx4 = canvas4.getContext("2d");
-            ctx4.save();
-            ctx4.translate(w/2, w/2);
-            ctx4.rotate(Math.PI* rotation / 180);
-            ctx4.translate(0, 0);
-            ctx4.drawImage(el, 0, 0,nw, nh, -w/2,-w/2, w, w);
-            ctx4.restore();
-            ctx.drawImage(canvas4, start_x, 0,  w-start_x, w, 0, 0, can.width, can.height);
-
-            ret+="sWidth:"+sWidth+",sHeight"+sHeight+",start_x:"+start_x +"<br>";
-        }else if(_self.is_exif_orientation && (Orientation==7 || Orientation==8)){//-90
-            let rotation = -90;
-            let sWidth = widthO;
-            let sHeight = parseInt(widthO*nh/nw);
-            can.width=sWidth;
-            can.height=sHeight;
-
-            let w =  Math.max(sWidth,sHeight);
-            let real_w = w * nw / nh;
-            let start_x = parseInt((w -real_w));
-            let canvas4 = document.createElement('canvas');
-            canvas4.width = w;
-            canvas4.height = w;
-            let ctx4 = canvas4.getContext("2d");
-            ctx4.save();
-            ctx4.translate(w/2, w/2);
-            ctx4.rotate(Math.PI* rotation / 180);
-            ctx4.translate(0, 0);
-            ctx4.drawImage(el, 0, 0,nw, nh, -w/2,-w/2, w, w);
-            ctx4.restore();
-            ctx.drawImage(canvas4, start_x, 0,  w-start_x, w, 0, 0, can.width, can.height);
-        }else{
-            can.width=sWidth;
-            can.height=sHeight;
-            ctx.drawImage(el, left, top, nw, nh, 0, 0, can.width, can.height);
-        }
+        // let radian = Math.PI / 180;
+        // if(Orientation==2 || Orientation==4 || Orientation==5 || Orientation==7 ){//鏡像
+        //
+        // }
+        // if(_self.is_exif_orientation && (Orientation==3 || Orientation==4)){//+180
+        //     can.width=sWidth;
+        //     can.height=sHeight;
+        //
+        //     ctx.rotate(180*radian);
+        //     ctx.drawImage(el, left, top, nw, nh, 0, 0, can.width, can.height);
+        // }else if(_self.is_exif_orientation && (Orientation==5 || Orientation==6)){//+90
+        //
+        //
+        //     let rotation = 90;
+        //     let sWidth = widthO;
+        //     let sHeight = parseInt(widthO*nh/nw);
+        //     can.width=sWidth;
+        //     can.height=sHeight;
+        //
+        //     let w =  Math.max(sWidth,sHeight);
+        //     let real_w = w * nw / nh;
+        //     let start_x = parseInt((w -real_w));
+        //     let canvas4 = document.createElement('canvas');
+        //     canvas4.width = w;
+        //     canvas4.height = w;
+        //     let ctx4 = canvas4.getContext("2d");
+        //     ctx4.save();
+        //     ctx4.translate(w/2, w/2);
+        //     ctx4.rotate(Math.PI* rotation / 180);
+        //     ctx4.translate(0, 0);
+        //     ctx4.drawImage(el, 0, 0,nw, nh, -w/2,-w/2, w, w);
+        //     ctx4.restore();
+        //     ctx.drawImage(canvas4, start_x, 0,  w-start_x, w, 0, 0, can.width, can.height);
+        //
+        //     ret+="sWidth:"+sWidth+",sHeight"+sHeight+",start_x:"+start_x +"<br>";
+        // }else if(_self.is_exif_orientation && (Orientation==7 || Orientation==8)){//-90
+        //     let rotation = -90;
+        //     let sWidth = widthO;
+        //     let sHeight = parseInt(widthO*nh/nw);
+        //     can.width=sWidth;
+        //     can.height=sHeight;
+        //
+        //     let w =  Math.max(sWidth,sHeight);
+        //     let real_w = w * nw / nh;
+        //     let start_x = parseInt((w -real_w));
+        //     let canvas4 = document.createElement('canvas');
+        //     canvas4.width = w;
+        //     canvas4.height = w;
+        //     let ctx4 = canvas4.getContext("2d");
+        //     ctx4.save();
+        //     ctx4.translate(w/2, w/2);
+        //     ctx4.rotate(Math.PI* rotation / 180);
+        //     ctx4.translate(0, 0);
+        //     ctx4.drawImage(el, 0, 0,nw, nh, -w/2,-w/2, w, w);
+        //     ctx4.restore();
+        //     ctx.drawImage(canvas4, start_x, 0,  w-start_x, w, 0, 0, can.width, can.height);
+        // }else{
+        //     can.width=sWidth;
+        //     can.height=sHeight;
+        //     ctx.drawImage(el, left, top, nw, nh, 0, 0, can.width, can.height);
+        // }
         ret+="can:"+can.width+"x"+can.height+"<br>";
         //if(console.log)console.log("slider_move_image ",left,top,sWidth, sHeight, 0, 0, can.width, can.height);
 

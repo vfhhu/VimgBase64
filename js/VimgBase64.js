@@ -136,6 +136,8 @@ class VimgBase64{
                             "image_encode": _self.urlsafe_encode(data),
                             "data_encode": _self.urlsafe_encode(data.substring(data_head.length)),
                             "data_head": data_head,
+                            "ele":img,
+                            "canvasid":canvasid,
                             "index": _self.upload_index
                         });
                     }else {
@@ -172,6 +174,8 @@ class VimgBase64{
                                 "image_encode":_self.urlsafe_encode(data),
                                 "data_encode":_self.urlsafe_encode(data.substring(data_head.length)),
                                 "data_head":data_head,
+                                "ele":imageElement,
+                                "canvasid":canvasid,
                                 "index":_self.upload_index});
                         }
                         _self.readURL_file(callback);
@@ -198,13 +202,82 @@ class VimgBase64{
         let _self = this;
         let rate_r=_self.def_width/nw;
         let sWidth = parseInt(rate_r * nw);
-        let sHeight = parseInt(rate_r * nh);
-        if(sHeight>_self.def_heigh){
-            rate_r=_self.def_heigh/nh;
-            sWidth = parseInt(rate_r * nw);
-            sHeight = parseInt(rate_r * nh);
-        }
+        // let sHeight = parseInt(rate_r * nh);
+        // if(sHeight>_self.def_heigh){
+        //     rate_r=_self.def_heigh/nh;
+        //     sWidth = parseInt(rate_r * nw);
+        //     sHeight = parseInt(rate_r * nh);
+        // }
         return sWidth;
+    }
+
+    rotateImage(el,canvasid,ang=0,callback){
+        let _self = this;
+        // el.style.transform = "rotate("+ang+"deg)";
+
+        let can=_self.tmpMap[canvasid]["can"];
+        let ctx=_self.tmpMap[canvasid]["ctx"];
+
+        let nw = el.naturalWidth;
+        let nh = el.naturalHeight;
+        let widthO=_self.getMinWidth(nw,nh);
+
+        let rotation = ang;
+        let sWidth = widthO;
+        let sHeight = parseInt(widthO*nh/nw);
+        can.width=sWidth;
+        can.height=sHeight;
+
+        let w =  Math.max(sWidth,sHeight);
+        let real_w = w * nw / nh;
+
+        let canvas4 = document.createElement('canvas');
+        canvas4.width = sWidth;
+        canvas4.height = sHeight;
+        let centerX = canvas4.width / 2;
+        let centerY = canvas4.height / 2;
+        let ctx4 = canvas4.getContext("2d");
+        ctx4.clearRect(0, 0, canvas4.width, canvas4.height);
+        ctx4.translate(centerX, centerY);
+        ctx4.rotate(Math.PI* rotation / 180);
+        if(ang%360==90 || ang%360==270){
+            ctx4.drawImage(el, -centerY, -centerX,sHeight,sWidth);
+        } else {
+            ctx4.drawImage(el, -centerX, -centerY,sWidth,sHeight);
+        }
+        // ctx4.drawImage(el, 0, 0,sWidth,sHeight);
+        ctx4.rotate(-1*Math.PI* rotation / 180);
+        if(ang%360==90 || ang%360==270){
+
+            can.width = sHeight*sWidth/sHeight;
+            can.height = sWidth*sWidth/sHeight;
+        } else if(ang%360==0 || ang%360==180){
+            can.width = sWidth;
+            can.height = sHeight;
+        } else {
+            can.width = sWidth;
+            can.height = sWidth;
+        }
+        ctx.clearRect(0, 0, can.width, can.height);
+        ctx.drawImage(canvas4, 0,0,can.width, can.height);
+        if( callback!=null && typeof callback === 'function' ){
+            // let can=_self.tmpMap[canvasid]["can"];
+            let data = can.toDataURL(_self.imagetype,_self.compression_ratio);
+            let data_head = "data:" + _self.imagetype + ";base64,";
+            callback({
+                "type": VimgBase64OnData,
+               // "tmpdata": canvas4.toDataURL(_self.imagetype,_self.compression_ratio),
+                "data": data,
+                "imagetype": _self.imagetype,
+                "image_encode": _self.urlsafe_encode(data),
+                "data_encode": _self.urlsafe_encode(data.substring(data_head.length)),
+                "data_head": data_head,
+                "ele":el,
+                "canvasid":canvasid,
+                "index": _self.upload_index
+            });
+        }
+
     }
     slider_move_image(el,canvasid, Orientation,callback){
         let _self = this;
@@ -299,6 +372,9 @@ class VimgBase64{
 
 
     getOrientation(file, callback) {
+        //2, 4, 5, 7 //鏡像
+        //5, 6 //+90
+        //7, 8 //-90
         let reader = new FileReader();
         reader.onload = function(e) {
 

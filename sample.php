@@ -1,4 +1,34 @@
 <?php
+
+//$type=VimgBase64 imagetype
+//$data=VimgBase64 data_encode
+//data2img($type,$data);
+function data2img($type,$data){
+    $ret=array();
+    $ret["su"]=false;
+    $data=urlsafe_decode($data);
+    if($type!="image/jpeg" && $type!="image/png"){
+        $ret["msg"]="type error";
+        return $ret;
+    }
+    $head="data:".$type.";base64,";
+    $base=$data;
+    if(!is_base64($base)){
+        $ret["msg"]="data error";
+        return $ret;
+    }
+    $data=$head.$base;
+    $ret["data"]=$data;
+    $ret["su"]=true;
+    return $ret;
+}
+function is_base64($s) {
+    if (!preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s)) return false;
+    $decoded = base64_decode($s, true);
+    if(false === $decoded) return false;
+    if(base64_encode($decoded) != $s) return false;
+    return true;
+}
 function urlsafe_decode($base64S){
     $base64S = str_replace(array('-','_'),array('+','/'),$base64S);
     $mod4 = strlen($base64S) % 4;

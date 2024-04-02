@@ -27,6 +27,11 @@ Step3 set input file or load img tag and callback
 </h2>
 
 ``````js
+vimg.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (ret){
+    if("type" in retA && retA["type"]==VimgBase64OnData){
+        console.log(retA)
+    }
+});
 //set onchange to input file
 vimg.setInput({input_file_id},function(retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){
@@ -96,6 +101,12 @@ var vimg=new VimgBase64();
 </h2>
 
 ``````js
+vimg.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (ret){
+    if("type" in retA && retA["type"]==VimgBase64OnData){
+        console.log(retA)
+    }
+});
+
 //此函式會設定input file 的 onchange
 vimg.setInput({input_file_id},function(retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){

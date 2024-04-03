@@ -76,6 +76,7 @@ Please use the image_encode or data_encode of the returned data
 <br>
 it use urlsafe_encode base64
 <br>
+
 [php load sample](https://github.com/vfhhu/VimgBase64/blob/master/sample.php)
 
 <br><br><br>
@@ -84,7 +85,7 @@ it use urlsafe_encode base64
 JS前端將 input 及 img tag 的圖片轉成base64格式
 <br>
 轉換完成的資料可直接用於顯示或上傳
-
+<br>
 [範例網址](https://tool.vfhhu.xyz/a_js_sample/vbase64.php)
 <h2>
 第一步: 引入js
@@ -159,4 +160,5 @@ vimg.setDelay(300);
 <br>
 它使用 urlsafe_encode base64
 <br>
+
 [php 的讀取範例](https://github.com/vfhhu/VimgBase64/blob/master/sample.php)

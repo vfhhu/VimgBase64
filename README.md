@@ -75,6 +75,8 @@ When you want to upload base64 data
 Please use the image_encode or data_encode of the returned data
 <br>
 it use urlsafe_encode base64
+<br>
+[php load sample](https://github.com/vfhhu/VimgBase64/blob/master/sample.php)
 
 <br><br><br>
 ######################################
@@ -156,3 +158,5 @@ vimg.setDelay(300);
 請使用返回數據的 image_encode 或 data_encode
 <br>
 它使用 urlsafe_encode base64
+<br>
+[php 的讀取範例](https://github.com/vfhhu/VimgBase64/blob/master/sample.php)

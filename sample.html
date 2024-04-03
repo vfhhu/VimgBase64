@@ -59,6 +59,7 @@
                     if("type" in retA && retA["type"]==VimgBase64OnData){
                         console.log(retA)
                         $("#img").attr("src",retA["data"])
+                        vimg.clear();
                     }
                 });
             });

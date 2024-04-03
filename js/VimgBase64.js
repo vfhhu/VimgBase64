@@ -93,7 +93,7 @@ class VimgBase64{
     creatInputFile(option={},callback){
         let _self = this;
         let head="";
-        let append="";
+        let append=_self.workdiv_id;
         let multiple=false;
         let is_remove=false;
         let auto_click=false;
@@ -434,5 +434,17 @@ class VimgBase64{
         return base64_string
             .replace(/\-/g, '+') // Convert '-' to '+'
             .replace(/\_/g, '/'); // Convert '_' to '/'
+    }
+    clear(){
+        let _self = this;
+        var elementToRemove = document.getElementById(_self.workdiv_id);
+// Check if the element exists before removing it
+        if (elementToRemove) {
+            // Remove the element
+            elementToRemove.remove();
+        } else {
+            console.log("Element not found");
+        }
+
     }
 }

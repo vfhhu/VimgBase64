@@ -27,7 +27,7 @@ Step3 set input file or load img tag and callback
 </h2>
 
 ``````js
-vimg.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (ret){
+vimg.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){
         console.log(retA)
     }

@@ -110,77 +110,16 @@ class VimgBase64{
         input.type="file";
         input.multiple=multiple;
         input.accept = accept;
-
-        input.addEventListener(
-            'change',
-            function() {
-                if(_self.debug && console.log)console.log("CreatInputFile onChange")
-                if(this.files.length==0){
-                    if(is_remove)input.remove();
-                }else _self.ReadInput(this,function(r){
-                    if(_self.debug && console.log)console.log("CreatInputFile pReadInput",r)
-                    if(callback!=null && typeof callback=="function")callback(r);
-                    if(is_remove)input.remove();
-                });
-            },
-            false
-        );
-        if(auto_click)setTimeout(function(){
-            input.click();
-        },200);
         input.setAttribute("id", workdiv_id);
         input.style.cssText="display:none";
         if(append==null || typeof append!="string" || append=="" || append=="body") document.body.appendChild(input);
         else document.getElementById(append).appendChild(input);
+        _self.setInput(workdiv_id,callback)
+
+        if(auto_click)setTimeout(function(){
+            input.click();
+        },200);
         return workdiv_id;
-    }
-    ReadInput(inputEl,callback){
-        let _self = this;
-        _self.delay=1000;
-        let evenID="even_"+_self._GetId();
-        if (inputEl.files && inputEl.files.length>0) {
-            let limite=inputEl.files.length;
-            if(_self.limite>0)Math.min(limite,_self.limite)
-            for(let i=0;i<limite;i++){
-                let index=i;
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    if(_self.debug && console.log)console.log("pReadInput reader.onload",reader.result)
-                    let imageElement=new Image();
-                    let canvasid=_self._CreatCanvas(_self.constructor.name,_self.workdiv_id);
-                    imageElement.onload = function(){
-                        if(_self.debug && console.log)console.log("pReadInput imageElement.onload")
-                        _self.slider_move_image(imageElement ,canvasid ,_self.Orientation ,function(){
-                            setTimeout(function(){
-                                let can=document.getElementById(canvasid)
-                                if(callback!=null && typeof callback=="function"){
-                                    let data=can.toDataURL(_self.imagetype);
-                                    let data_head="data:"+_self.imagetype+";base64,";
-                                    callback({"type":VimgBase64OnData,
-                                        "data":data,
-                                        "imagetype":_self.imagetype,
-                                        "image_encode":_self.urlsafe_encode(data),
-                                        "data_encode":_self.urlsafe_encode(data.substring(data_head.length)),
-                                        "data_head":data_head,
-                                        "evenID":evenID,
-                                        "index":index});
-                                }
-                                imageElement.remove();
-                                can.remove();
-                            },_self.delay);
-                        });
-                    };
-                    imageElement.crossOrigin="*"
-                    imageElement.src=reader.result;
-                }
-                let file=inputEl.files[i];
-                _self.getOrientation(file, function(r){
-                    _self.Orientation=r;
-                    reader.readAsDataURL(file);
-                })
-            }
-        }
-        return evenID;
     }
     setInput(input_id="",callback){
         if(input_id==null || typeof input_id!="string" ){

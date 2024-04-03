@@ -27,12 +27,16 @@ Step3 set input file or load img tag and callback
 </h2>
 
 ``````js
+//sample 1
+//use in click function,it will creat input file and pop file window
 vimg.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){
         console.log(retA);
         vimg.clear();
     }
 });
+
+//sample 2
 //set onchange to input file
 vimg.setInput({input_file_id},function(retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){
@@ -40,6 +44,7 @@ vimg.setInput({input_file_id},function(retA){
     }
 });
 
+//sample 3
 //direct load img tag
 vimg.readImage({image_id},function (retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){
@@ -102,12 +107,16 @@ var vimg=new VimgBase64();
 </h2>
 
 ``````js
-vimg.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (ret){
+//範例 1
+//用於click function內,會自動建立input並跳出讀取畫面
+vimg.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){
-        console.log(retA)
+        console.log(retA);
+        vimg.clear();
     }
 });
 
+//範例 2
 //此函式會設定input file 的 onchange
 vimg.setInput({input_file_id},function(retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){
@@ -115,6 +124,7 @@ vimg.setInput({input_file_id},function(retA){
     }
 });
 
+//範例 3
 //直接讀取img標籤的圖片內容
 vimg.readImage({image_id},function (retA){    
     if("type" in retA && retA["type"]==VimgBase64OnData){

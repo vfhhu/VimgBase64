@@ -1,6 +1,8 @@
 var VimgBase64OnData="onData";
 var VimgBase64OnStop="onStop";
 var VimgBase64OnStart="onStart";
+var VimgFileOnData="onFileData";
+
 var VimgBase64IdCnt=0;
 /*
 * Github:
@@ -129,6 +131,7 @@ class VimgBase64{
         let _self = this;
         let input = document.getElementById(input_id);
         input.addEventListener("change", function(event) {
+            // const file = event.target.files[0];
             if (input.files && input.files.length>0){
                 if(callback!=null && typeof callback=="function"){
                     callback({"type":VimgBase64OnStart,"data":""});
@@ -186,35 +189,7 @@ class VimgBase64{
 
         _self.Orientation=-2;
         let reader = new FileReader();
-        reader.onload = function (e) {
-            // if(console.log)console.log(reader.result);
-            let imageElement=new Image();
-            imageElement.crossOrigin="*"
-            imageElement.src=reader.result;
 
-            let canvasid=_self._CreatCanvas(_self.constructor.name,_self.workdiv_id);
-            setTimeout(function(){
-                _self.slider_move_image(imageElement ,canvasid ,_self.Orientation ,function(ret){
-                    setTimeout(function(){
-                        if(callback!=null && typeof callback=="function"){
-                            let can=_self.tmpMap[canvasid]["can"];
-                            let data=can.toDataURL(_self.imagetype,_self.compression_ratio);
-                            let data_head="data:"+_self.imagetype+";base64,";
-                            callback({"type":VimgBase64OnData,
-                                "data":data,
-                                "imagetype":_self.imagetype,
-                                "image_encode":_self.urlsafe_encode(data),
-                                "data_encode":_self.urlsafe_encode(data.substring(data_head.length)),
-                                "data_head":data_head,
-                                "ele":imageElement,
-                                "canvasid":canvasid,
-                                "index":_self.upload_index});
-                        }
-                        _self.readURL_file(callback);
-                    },_self.delay);
-                });
-            },_self.delay);
-        }
         if(_self.upload_index>=_self.upload_input.files.length || (_self.limit>0 && _self.upload_index>=_self.limit)){
             if(_self.callback!=null && typeof(_self.callback)=="function"){
                 _self.callback({"type":VimgBase64OnStop});
@@ -224,11 +199,60 @@ class VimgBase64{
             let file=_self.upload_input.files[_self.upload_index];
             _self.upload_index++;
             // if(console.log)console.log(file);
-            _self.getOrientation(file, function(r){
-                _self.Orientation=r;
-                reader.readAsDataURL(file);
-            })
+            let fileType = file.type;
+            if (fileType.startsWith('image/')) {
+                reader.onload = function (e) {
+                    // if(console.log)console.log(reader.result);
+                    let imageElement=new Image();
+                    imageElement.crossOrigin="*"
+                    imageElement.src=reader.result;
+
+                    let canvasid=_self._CreatCanvas(_self.constructor.name,_self.workdiv_id);
+                    setTimeout(function(){
+                        _self.slider_move_image(imageElement ,canvasid ,_self.Orientation ,function(ret){
+                            setTimeout(function(){
+                                if(callback!=null && typeof callback=="function"){
+                                    let can=_self.tmpMap[canvasid]["can"];
+                                    let data=_self.getCanvasCallback(can);
+                                    data= Object.assign(data, {"ele":imageElement,"canvasid":canvasid})
+                                    callback(data);
+                                }
+                                _self.readURL_file(callback);
+                            },_self.delay);
+                        });
+                    },_self.delay);
+                }
+                _self.getOrientation(file, function(r){
+                    _self.Orientation=r;
+                    reader.readAsDataURL(file);
+                })
+            }else{
+                reader.onload = function(event) {
+                    let pdfData = event.target.result;
+                    let blob=new Blob([pdfData]);
+                    callback({"type":VimgFileOnData,
+                        "data":pdfData,
+                        "blob":blob,
+                        "url":URL.createObjectURL(blob),
+                        "index":_self.upload_index});
+                };
+                reader.readAsArrayBuffer(file);
+            }
         }
+    }
+    getCanvasCallback(can){
+        let _self=this;
+        let data=can.toDataURL(_self.imagetype,_self.compression_ratio);
+        let data_head="data:"+_self.imagetype+";base64,";
+        return {"type":VimgBase64OnData,
+            "data":data,
+            "imagetype":_self.imagetype,
+            "image_encode":_self.urlsafe_encode(data),
+            "data_encode":_self.urlsafe_encode(data.substring(data_head.length)),
+            "data_head":data_head,
+            // "ele":imageElement,
+            // "canvasid":canvasid,
+            "index":_self.upload_index}
     }
     getMinWidth(nw,nh){
         let _self = this;

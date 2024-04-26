@@ -258,13 +258,13 @@ class VimgBase64{
         let _self = this;
         let rate_r=_self.def_width/nw;
         let sWidth = parseInt(rate_r * nw);
-        // let sHeight = parseInt(rate_r * nh);
-        // if(sHeight>_self.def_heigh){
-        //     rate_r=_self.def_heigh/nh;
-        //     sWidth = parseInt(rate_r * nw);
-        //     sHeight = parseInt(rate_r * nh);
-        // }
         return sWidth;
+    }
+    getRatio(nw){
+        let _self = this;
+        let widthO=_self.getMinWidth(nw,nw);
+        let rate_r=widthO/nw;
+        return rate_r;
     }
 
     rotateImage(el,canvasid,ang=0,callback){
@@ -339,8 +339,9 @@ class VimgBase64{
         let _self = this;
         let nw = el.naturalWidth;
         let nh = el.naturalHeight;
-        let widthO=_self.getMinWidth(nw,nh);
-        let rate_r=widthO/nw;
+        let rate_r=_self.getRatio(nw)
+        // let widthO=_self.getMinWidth(nw,nh);
+        // let rate_r=widthO/nw;
         let sWidth = parseInt(rate_r * nw);
         let sHeight = parseInt(rate_r * nh);
         let top = 0;

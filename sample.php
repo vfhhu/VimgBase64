@@ -114,22 +114,23 @@ function urlsafe_encode($base64S) {
                             // 加載第一頁
                             return pdf.getPage(1);
                         }).then(function(page) {
+                            let scale=1.0
                             // 獲取 Canvas 上下文
                             let canvas_id = vimg._CreatCanvas(vimg.constructor.name,vimg.workdiv_id);
                             let canvas=vimg.tmpMap[canvas_id]["can"];
                             const context = canvas.getContext('2d');
                             // 設置 Canvas 尺寸
-                            canvas.width = page.view[2];
-                            canvas.height = page.view[3];
+                            canvas.width = page.view[2]*scale;
+                            canvas.height = page.view[3]*scale;
                             // 渲染 PDF 到 Canvas
                             const renderContext = {
                                 canvasContext: context,
-                                viewport: page.getViewport({ scale: 1.0 }),
+                                viewport: page.getViewport({ scale: scale }),
                             };
                             page.render(renderContext);
                             setTimeout(function(){
                                 retA=vimg.getCanvasCallback(canvas);
-                                console.log(retA["data"])
+                                $("#img").attr("src",retA["data"])
                             },vimg.delay);
                         });
                     }

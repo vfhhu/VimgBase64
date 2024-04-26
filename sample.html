@@ -56,7 +56,7 @@
         <script>
             $(function() {
                 let vimg=new VimgBase64({"width":1280,"limit":1,"compression_ratio":0.8});
-                vimg.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (retA){
+                vimg.creatInputFile({"accept": ".png, .jpg, .jpeg, .pdf","auto_click":true}, function (retA){
                     if("type" in retA && retA["type"]==VimgBase64OnData){
                         console.log(retA)
                         $("#img").attr("src",retA["data"])

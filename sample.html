@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
     <script src="js/VimgBase64.js"></script>
+    <script src="/js/pdfjs/pdf.mjs" type="module"></script>
 
 </head>
 <style>
@@ -54,12 +55,38 @@
         </div>
         <script>
             $(function() {
-                let vimg=new VimgBase64({"width":1280,"limit":6,"compression_ratio":0.8});
+                let vimg=new VimgBase64({"width":1280,"limit":1,"compression_ratio":0.8});
                 vimg.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (retA){
                     if("type" in retA && retA["type"]==VimgBase64OnData){
                         console.log(retA)
                         $("#img").attr("src",retA["data"])
                         vimg.clear();
+                    }
+                    //pdf to image sample
+                    if("type" in retA && retA["type"]==VimgFileOnData){
+                        let typedarray = new Uint8Array(retA["data"]);
+                        pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                            // 加載第一頁
+                            return pdf.getPage(1);
+                        }).then(function(page) {
+                            // 獲取 Canvas 上下文
+                            let canvas_id = vimg._CreatCanvas(vimg.constructor.name,vimg.workdiv_id);
+                            let canvas=vimg.tmpMap[canvas_id]["can"];
+                            const context = canvas.getContext('2d');
+                            // 設置 Canvas 尺寸
+                            canvas.width = page.view[2];
+                            canvas.height = page.view[3];
+                            // 渲染 PDF 到 Canvas
+                            const renderContext = {
+                                canvasContext: context,
+                                viewport: page.getViewport({ scale: 1.0 }),
+                            };
+                            page.render(renderContext);
+                            setTimeout(function(){
+                                retA=vimg.getCanvasCallback(canvas);
+                                console.log(retA["data"])
+                            },vimg.delay);
+                        });
                     }
                 });
             });

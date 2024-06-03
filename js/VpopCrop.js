@@ -17,7 +17,7 @@ class VpopCrop{
         _self.cb = cb;
         _self.cb_cancel = cb_cancel;
         _self.vimgBase64 = vimgBase64;
-        _self.height = 500;
+        _self.height = window.innerHeight/2;
         _self.cb_ret_cnt = 0;
         let aspectRatio=3 / 2;
         if("height" in option && parseFloat(option["height"])>10)_self.height=option["height"];
@@ -26,10 +26,10 @@ class VpopCrop{
         if("type" in option && option["type"]=="circle")_self.addStyle()
         else _self.removeStyle()
         //https://github.com/fengyuanchen/cropperjs
-        _self.input_id = _self.vimgBase64.pCreatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (ret) {
-            // console.log(ret)
+        _self.input_id = _self.vimgBase64.creatInputFile({"accept": ".png, .jpg, .jpeg","auto_click":true}, function (ret) {
+            if(ret["type"]!="onData")return;
             if (ret["index"] >= 2) return;
-            $("#"+_self.vimgBase64ID).attr("src", ret["data"]);
+            document.getElementById(_self.vimgBase64ID).setAttribute("src", ret["data"]);
             let image = document.getElementById(_self.vimgBase64ID);
             _self.corp1 = new Cropper(image, {
                 aspectRatio: aspectRatio,
@@ -48,12 +48,16 @@ class VpopCrop{
 
                 },
                 ready() {
-                    $(".cropper-container").css("height", _self.height+"px")
+                    // console.log("ready")
+                    var elements = document.querySelectorAll(".cropper-container");
+                    elements.forEach(function(element) {
+                        element.style.height = _self.height + "px";
+                    });
                     let top = (_self.height - _self.corp1.getCanvasData()["height"]) / 2
                     _self.corp1.setCanvasData({top: top})
                     let top2 = (_self.height - _self.corp1.getCropBoxData()["height"]) / 2
                     let width=_self.corp1.getContainerData()["width"]
-                    _self.corp1.setCropBoxData({top: top2,width:width,left:0})
+                    _self.corp1.setCropBoxData({top: top2})
                     _self.corp1.move(1, -1);
                 },
             });
@@ -72,7 +76,7 @@ class VpopCrop{
                 '<button id="'+_self.btn_CancelTxID+'">cancel</button>',
         });
         setTimeout(function () {
-            $("#"+_self.btn_cropTxID).click(function () {
+            document.getElementById(_self.btn_cropTxID).addEventListener('click', function() {
                 // console.log("crop2",_self.corp1.getCropBoxData())
                 // let data = _self.corp1.getCroppedCanvas(_self.corp1.getCropBoxData())//縮圖大小
                 let data = _self.corp1.getCroppedCanvas()//原圖大小
@@ -85,16 +89,16 @@ class VpopCrop{
                 _self.pop_photo_box.hide();
                 _self.corp1.destroy();
             });
-            $("#"+_self.btn_CancelTxID).click(function () {
+            document.getElementById(_self.btn_CancelTxID).addEventListener('click', function() {
                 _self.pop_photo_box.hide();
                 _self.corp1.destroy();
                 if (typeof cb_cancel === 'function') {
                     cb_cancel()
                 }
-            });
-            $("#"+_self.btn_rotateTxID).click(function () {
+            })
+            document.getElementById(_self.btn_rotateTxID).addEventListener('click', function() {
                 _self.corp1.rotate(90);
-            });
+            })
         }, 2000);
 
     }

@@ -51,6 +51,13 @@ vimg.readImage({image_id},function (retA){
         console.log(retA);
     }
 })
+
+//sample4
+//pop and crop
+let vimg2pop=new VimgBase64({"width":1280,"limit":1,"compression_ratio":0.8});
+let vcrop=new VpopCrop(vimg2pop,{aspectRatio:1/1,type: 'circle'},function(img){
+    
+})
 ``````
 
 <h2>
@@ -133,6 +140,13 @@ vimg.readImage({image_id},function (retA){
     if("type" in retA && retA["type"]==VimgBase64OnData){
         console.log(retA);
     }
+})
+
+//範例 4
+//跳出視窗和裁切
+let vimg2pop=new VimgBase64({"width":1280,"limit":1,"compression_ratio":0.8});
+let vcrop=new VpopCrop(vimg2pop,{aspectRatio:1/1,type: 'circle'},function(img){
+
 })
 ``````
 

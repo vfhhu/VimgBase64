@@ -56,10 +56,14 @@ function urlsafe_encode($base64S) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.2/popup.min.js"></script>
+
     <script src="js/VimgBase64.js"></script>
-    <script src="js/VpopCrop.js"></script>
     <script src="/js/pdfjs/pdf.mjs" type="module"></script>
+
+    <link  href="js/cropperjs/dist/cropper.css" rel="stylesheet">
+    <script src="js/cropperjs/dist/cropper.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.2/popup.min.js"></script>
+    <script src="js/VpopCrop.js"></script>
 
 </head>
 <style>
@@ -178,6 +182,9 @@ function urlsafe_encode($base64S) {
             let vcrop=new VpopCrop(vimg2pop,{aspectRatio:1/1,type: 'circle'},function(img){
 
             })
+            // let vcrop=new VpopCrop(vimg2pop,{aspectRatio:3.5/4.5},function(img){
+            //
+            // })
         </script>
 
 

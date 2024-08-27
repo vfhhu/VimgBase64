@@ -83,7 +83,15 @@ Please use the image_encode or data_encode of the returned data
 <br>
 it use urlsafe_encode base64
 <br>
+<h2>
+use pop image
+</h2>
 
+``````js
+<img class="classname" src="image1.jpg" />
+<img class="classname" src="image2.jpg" />
+new VpopShowImage("classname") 
+``````
 [php load sample](https://github.com/vfhhu/VimgBase64/blob/master/sample.php)
 
 <br><br><br>
@@ -174,5 +182,15 @@ vimg.setDelay(300);
 <br>
 它使用 urlsafe_encode base64
 <br>
+<h2>
+pop image 用法
+</h2>
+
+``````js
+<img class="classname" src="image1.jpg" />
+<img class="classname" src="image2.jpg" />
+new VpopShowImage("classname") 
+``````
+
 
 [php 的讀取範例](https://github.com/vfhhu/VimgBase64/blob/master/sample.php)
